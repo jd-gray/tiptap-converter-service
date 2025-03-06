@@ -1,0 +1,21 @@
+{
+  "name": "tiptap-converter-service",
+  "version": "1.0.0",
+  "main": "dist/handler.js",
+  "engines": {
+    "node": "18.20.4"
+  },
+  "scripts": {
+    "build": "tsc",
+    "start": "npx functions-framework --target=convert --port=8081"
+  },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.6",
+    "@tiptap/html": "^2.11.5",
+    "@tiptap/starter-kit": "^2.11.5"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.4",
+    "@types/express": "^4.17.13"
+  }
+}
