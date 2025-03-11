@@ -1,11 +1,12 @@
 # Tiptap Converter Service
 
-A serverless microservice that converts HTML content into Tiptap JSON format. Built with Node.js and TypeScript, this service leverages Tiptap's core libraries and custom extensions to generate a JSON structure compatible with the Tiptap editor. It is designed to run as a Google Cloud Function and can be integrated with other systems via HTTP requests.
+A serverless microservice that converts HTML content into Tiptap JSON format. Built with Node.js and TypeScript, this service leverages Tiptap's core libraries to generate a JSON structure compatible with the Tiptap editor. It is designed to run as a Google Cloud Function and can be integrated with other systems via HTTP requests.
 
 ## Features
 
 - **HTML to Tiptap JSON Conversion:** Transforms HTML strings into a structured Tiptap JSON document.
 - **TypeScript & Node.js:** Provides strong type-checking and maintainability.
+- **jsdom Integration:** Emulates a minimal DOM environment so that Tiptap functions properly in a Node.js environment.
 - **Serverless Ready:** Easily deployable as a Google Cloud Function.
 - **Local Development:** Supports local testing using the Functions Framework.
 
@@ -24,6 +25,16 @@ A serverless microservice that converts HTML content into Tiptap JSON format. Bu
    ```bash
    git clone https://github.com/jd-gray/tiptap-converter-service.git
    cd tiptap-converter-service
+   ```
+
+## Installation
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone https://github.com/jd-gray/tiptap-converter-service.git
+   cd tiptap-converter-service
+   ```
    
 1. **Install Dependencies:**
 
@@ -45,16 +56,27 @@ A serverless microservice that converts HTML content into Tiptap JSON format. Bu
    
 1. **Access the Service:**
 
-   Send a POST request to `http://localhost:8081/convert` with a JSON body containing an `html` property. The service will respond with a JSON object containing the Tiptap JSON representation of the HTML content:
+**/convert**
 
-    ```
-   {
+   Send a GET request to `http://localhost:8081/convert` with a JSON body containing an `html` property. The service will respond with a JSON object containing the Tiptap JSON representation of the HTML content:
+
+
+    {
       "html": "<p>Hello, <strong>world</strong>!</p>"
     }
-    ```
     
-    Expected response:
+ Expected response:
+
+      {"tiptapJSON":{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Hello, "},{"type":"text","marks":[{"type":"bold"}],"text":"world"},{"type":"text","text":"!"}]}]}}
+
+**/isEmpty**
+
+   Send a GET request to `http://localhost:8081/isEmpty` with a JSON body containing an `content` property. The service will respond with a JSON object containing a boolean value indicating whether the HTML content is empty:
+
+    {
+      "content": "<p>Hello, <strong>world</strong>!</p>"
+    }
     
-    ```
-    {"tiptapJSON":{"type":"doc","content":[{"type":"paragraph","content":[{"type":"text","text":"Hello, "},{"type":"text","marks":[{"type":"bold"}],"text":"world"},{"type":"text","text":"!"}]}]}}
-    ```
+ Expected response:
+
+      {"isEmpty":false}
